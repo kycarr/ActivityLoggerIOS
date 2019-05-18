@@ -102,15 +102,17 @@ class MainApplication extends React.Component {
                         name={this.state.isUserLocked || this.props.didStart ? 'lock' : 'unlock'}
                         onPress={() => this.setState({ isUserLocked: !this.state.isUserLocked })} />
                 </View>
-                <Picker
-                    enabled={!this.state.isUserLocked && !this.props.didStart}
-                    selectedValue={this.props.userID}
-                    onValueChange={(itemValue, itemIndex) => this.onUserNameSet(itemValue)} >
-                    <Picker.Item label="" value="" />
-                    {this.props.users.map(item =>
-                        <Picker.Item label={item} value={item} />
-                    )}
-                </Picker>
+
+                {this.props.didStart || this.state.isUserLocked ? undefined :
+                    <Picker
+                        selectedValue={this.props.userID}
+                        onValueChange={(itemValue, itemIndex) => this.onUserNameSet(itemValue)} >
+                        <Picker.Item label="" value="" />
+                        {this.props.users.map(item =>
+                            <Picker.Item label={item} value={item} />
+                        )}
+                    </Picker>
+                }
             </View>
         )
     }
@@ -124,15 +126,17 @@ class MainApplication extends React.Component {
                     disabled={this.state.activityType !== 'other' || this.props.didStart}
                     onChangeText={text => this.onActivityNameSet(text)}
                 />
-                <Picker
-                    enabled={!this.props.didStart}
-                    selectedValue={this.state.activityType}
-                    onValueChange={(itemValue, itemIndex) => this.onActivityChosen(itemValue)} >
-                    <Picker.Item label="other" value="other" />
-                    {this.props.activities.map(item =>
-                        <Picker.Item label={item} value={item} />
-                    )}
-                </Picker>
+
+                {this.props.didStart ? undefined :
+                    <Picker
+                        selectedValue={this.state.activityType}
+                        onValueChange={(itemValue, itemIndex) => this.onActivityChosen(itemValue)} >
+                        <Picker.Item label="other" value="other" />
+                        {this.props.activities.map(item =>
+                            <Picker.Item label={item} value={item} />
+                        )}
+                    </Picker>
+                }
             </View>
         )
     }
