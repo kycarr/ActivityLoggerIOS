@@ -3,6 +3,10 @@ package com.activityios;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.sensormanager.SensorManagerPackage;
+import com.github.reactnativecommunity.location.RNLocationPackage;
+import org.capslock.RNDeviceBrightness.RNDeviceBrightness;
+import com.sensors.RNSensorsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +29,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SensorManagerPackage(),
+            new RNLocationPackage(),
+            new RNDeviceBrightness(),
+            new RNSensorsPackage(),
             new VectorIconsPackage(),
             new RNFSPackage()
       );

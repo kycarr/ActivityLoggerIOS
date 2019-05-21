@@ -138,6 +138,10 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-sensor-manager')
+    implementation project(':react-native-location')
+    implementation project(':react-native-device-brightness')
+    implementation project(':react-native-sensors')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-fs')
     implementation fileTree(dir: "libs", include: ["*.jar"])

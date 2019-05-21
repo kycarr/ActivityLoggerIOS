@@ -1,18 +1,25 @@
 import * as React from 'react';
 import { Picker, ScrollView, StyleSheet, View } from 'react-native';
 import { Icon, Text } from 'react-native-elements'
-import { Appbar, Button, Divider, TextInput } from 'react-native-paper';
+import { Appbar, Button, Dialog, Divider, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import { _storeData } from '../constants/storage'
 import { loadLog, writeLog } from '../constants/files'
-import { setUser, setActivity, start, end, getUsers, getActivities } from '../constants/actions'
+import { setUser, setActivity, start, end, getUsers, getActivities, clearUsers, clearActivities } from '../constants/actions'
+
+import AccelerometerSensor from './AccelerometerSensor'
+import BrightnessSensor from './BrightnessSensor'
+import GyroscopeSensor from './GyroscopeSensor'
+import LocationSensor from './LocationSensor'
+import MagnetometerSensor from './MagnetometerSensor'
 
 class MainApplication extends React.Component {
     state = {
         activityType: 'other',
-        isUserLocked: false,
         elapsedTime: '00:00:00',
+        isUserLocked: false,
+        isActivityLocked: false,
+        isStopDialogVisible: false,
     };
 
     componentDidMount() {
@@ -24,13 +31,15 @@ class MainApplication extends React.Component {
         clearInterval(this.timer);
     }
 
-    viewFiles = async () => {
-        console.log(await loadLog(this.props.userID, this.props.activityName, this.props.startTime))
+
+
+    onClear = () => {
+        this.props.dispatch(clearUsers())
+        this.props.dispatch(clearActivities())
     }
 
-    clear = () => {
-        _storeData('users', JSON.stringify([]))
-        _storeData('activities', JSON.stringify([]))
+    onViewFiles = async () => {
+        console.log(await loadLog(this.props.userID, this.props.activityName, this.props.startTime))
     }
 
     onUserNameSet = (name) => {
@@ -47,7 +56,8 @@ class MainApplication extends React.Component {
         this.props.dispatch(setActivity(name))
     }
 
-    onToggleTimer = () => {
+    onToggleTimer = (confirmStop) => {
+        // timer hasn't started, start it
         if (!this.props.didStart) {
             this.props.dispatch(start(this.props.userID, this.props.activityName))
             this.timer = setInterval(() => {
@@ -55,12 +65,20 @@ class MainApplication extends React.Component {
             }, 1000);
             this.setState({ elapsedTime: '00:00:00' })
         }
+        // timer is being stopped
         else {
-            this.props.dispatch(end())
-            writeLog(this.props.userID, this.props.activityName, this.props.startTime, this.props.log)
-            clearInterval(this.timer);
+            if (confirmStop) {
+                this.props.dispatch(end())
+                writeLog(this.props.userID, this.props.activityName, this.props.startTime, this.props.log)
+                clearInterval(this.timer);
+                this.setState({ isStopDialogVisible: false })
+            } else {
+                this.setState({ isStopDialogVisible: true })
+            }
         }
     }
+
+
 
     getTime = () => {
         if (this.props.startTime === '') {
@@ -83,6 +101,8 @@ class MainApplication extends React.Component {
         var pad = (n, z = 2) => ('00' + n).slice(-z);
         return pad(s / 3.6e6 | 0) + ':' + pad((s % 3.6e6) / 6e4 | 0) + ':' + pad((s % 6e4) / 1000 | 0)
     }
+
+
 
     userID() {
         return (
@@ -150,7 +170,7 @@ class MainApplication extends React.Component {
                 <Button
                     mode="contained"
                     disabled={this.props.userID === '' || this.props.activityName === ''}
-                    onPress={() => this.onToggleTimer()}>
+                    onPress={() => this.onToggleTimer(false)}>
                     {this.props.didStart ? 'STOP' : 'START'}
                 </Button>
             </View>
@@ -164,6 +184,11 @@ class MainApplication extends React.Component {
 
         return (
             <View style={styles.container}>
+                <AccelerometerSensor />
+                <BrightnessSensor />
+                <LocationSensor />
+                <GyroscopeSensor />
+                <MagnetometerSensor />
             </View>
         )
     }
@@ -173,8 +198,8 @@ class MainApplication extends React.Component {
             <View>
                 <Appbar.Header>
                     <Appbar.Content title="Activity Logger" />
-                    <Appbar.Action icon="archive" onPress={() => this.viewFiles()} />
-                    <Appbar.Action icon="delete" onPress={() => this.clear()} />
+                    <Appbar.Action icon="archive" onPress={() => this.onViewFiles()} />
+                    <Appbar.Action icon="delete" onPress={() => this.onClear()} />
                 </Appbar.Header>
 
                 <ScrollView>
@@ -186,7 +211,19 @@ class MainApplication extends React.Component {
                     <Divider />
                     {this.sensors()}
                 </ScrollView>
-            </View>
+
+                <Dialog
+                    visible={this.state.isStopDialogVisible}
+                    onDismiss={() => this.setState({ isStopDialogVisible: false })}>
+                    <Dialog.Title>Alert</Dialog.Title>
+                    <Dialog.Content>
+                        <Text>Stop logging data?</Text>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={() => this.onToggleTimer(true)}>Done</Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </View >
         );
     }
 }
