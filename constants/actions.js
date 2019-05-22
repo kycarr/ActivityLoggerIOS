@@ -3,7 +3,7 @@ import {
     loadUsers,
     storeActivity,
     loadActivities,
-    _storeData
+    storeData
 } from './storage'
 
 export const SET_USER = "SET_USER"
@@ -47,7 +47,7 @@ export const getActivities = () => async (dispatch) => {
 }
 
 export const clearUsers = () => async (dispatch) => {
-    _storeData('users', JSON.stringify([]))
+    storeData('users', JSON.stringify([]))
     dispatch({
         type: SET_USERS,
         data: []
@@ -55,7 +55,7 @@ export const clearUsers = () => async (dispatch) => {
 }
 
 export const clearActivities = () => async (dispatch) => {
-    _storeData('activities', JSON.stringify([]))
+    storeData('activities', JSON.stringify([]))
     dispatch({
         type: SET_ACTIVITIES,
         data: []

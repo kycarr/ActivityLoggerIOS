@@ -10,7 +10,7 @@ export const storeUser = async (user) => {
 }
 
 export const loadUsers = async () => {
-    const value = await _retrieveData('users')
+    const value = await retrieveData('users')
     if (value === null || value === undefined) {
         return []
     }
@@ -27,7 +27,7 @@ export const storeActivity = async (activity) => {
 }
 
 export const loadActivities = async () => {
-    const value = await _retrieveData('activities')
+    const value = await retrieveData('activities')
     if (value === null || value === undefined) {
         return []
     }
@@ -35,13 +35,13 @@ export const loadActivities = async () => {
 }
 
 
-export const _storeData = async (key, data) => {
+export const storeData = async (key, data) => {
     try {
         await AsyncStorage.setItem(key, data);
     } catch (error) { }
 }
 
-export const _retrieveData = async (key) => {
+export const retrieveData = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
         if (value !== null) {

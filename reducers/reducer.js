@@ -1,3 +1,4 @@
+import { writeLog } from '../constants/files'
 import {
     SET_USER,
     SET_USERS,
@@ -44,36 +45,52 @@ const rootReducer = (state = initialState, action) => {
                 activities: action.data
             }
         case SET_START:
+            const startTime = action.data
+            const startLog = {
+                'userID': state.user,
+                'activity': state.activity,
+                'startTime': startTime,
+                'endTime': '',
+                'data': {},
+            }
+            writeLog(state.user, state.activity, startTime, startLog)
+
             return {
                 ...state,
-                startTime: action.data,
+                startTime: startTime,
                 endTime: '',
                 isRecording: true,
                 data: {},
-                logs: {
-                    'userID': state.user,
-                    'activity': state.activity,
-                    'startTime': action.data,
-                    'endTime': '',
-                    'data': {},
-                },
+                logs: startLog,
             }
         case SET_END:
+            const endTime = action.data
+            const endLog = {
+                ...state.logs,
+                'endTime': endTime,
+                'data': state.data
+            }
+            writeLog(state.user, state.activity, state.startTime, endLog)
+
             return {
                 ...state,
-                endTime: action.data,
+                endTime: endTime,
                 isRecording: false,
-                logs: {
-                    ...state.logs,
-                    'endTime': action.data,
-                    'data': state.data
-                }
+                logs: endLog
             }
         case ADD_LOG:
             var data = [action.data]
             if (action.key in state.data) {
                 data = [...state.data[action.key], action.data]
             }
+            const log = {
+                ...state.logs,
+                'data': {
+                    ...state.data,
+                    [action.key]: data
+                }
+            }
+            writeLog(state.user, state.activity, state.startTime, log)
 
             return {
                 ...state,
@@ -81,13 +98,7 @@ const rootReducer = (state = initialState, action) => {
                     ...state.data,
                     [action.key]: data
                 },
-                logs: {
-                    ...state.logs,
-                    'data': {
-                        ...state.data,
-                        [action.key]: data
-                    }
-                }
+                logs: log
             }
         default:
             return state

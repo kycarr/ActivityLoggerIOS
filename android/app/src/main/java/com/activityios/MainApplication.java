@@ -3,12 +3,12 @@ package com.activityios;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.benwixen.rnfilesystem.RNFileSystemPackage;
 import com.sensormanager.SensorManagerPackage;
 import com.github.reactnativecommunity.location.RNLocationPackage;
 import org.capslock.RNDeviceBrightness.RNDeviceBrightness;
 import com.sensors.RNSensorsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -29,12 +29,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFileSystemPackage(),
             new SensorManagerPackage(),
             new RNLocationPackage(),
             new RNDeviceBrightness(),
             new RNSensorsPackage(),
-            new VectorIconsPackage(),
-            new RNFSPackage()
+            new VectorIconsPackage()
       );
     }
 

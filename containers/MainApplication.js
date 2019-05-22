@@ -4,8 +4,16 @@ import { Icon, Text } from 'react-native-elements'
 import { Appbar, Button, Dialog, Divider, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import { loadLog, writeLog } from '../constants/files'
-import { setUser, setActivity, start, end, getUsers, getActivities, clearUsers, clearActivities } from '../constants/actions'
+import {
+    setUser,
+    setActivity,
+    start,
+    end,
+    getUsers,
+    getActivities,
+    clearUsers,
+    clearActivities
+} from '../constants/actions'
 
 import AccelerometerSensor from './AccelerometerSensor'
 import BrightnessSensor from './BrightnessSensor'
@@ -19,7 +27,7 @@ class MainApplication extends React.Component {
         elapsedTime: '00:00:00',
         isUserLocked: false,
         isActivityLocked: false,
-        isStopDialogVisible: false,
+        isDialogVisible: false,
     };
 
     componentDidMount() {
@@ -39,7 +47,7 @@ class MainApplication extends React.Component {
     }
 
     onViewFiles = async () => {
-        console.log(await loadLog(this.props.userID, this.props.activityName, this.props.startTime))
+
     }
 
     onUserNameSet = (name) => {
@@ -49,7 +57,7 @@ class MainApplication extends React.Component {
     onActivityChosen = (type) => {
         const name = type === 'other' ? '' : type
         this.setState({ activityType: type })
-        this.props.dispatch(setActivity(name))
+        this.onActivityNameSet(name)
     }
 
     onActivityNameSet = (name) => {
@@ -69,11 +77,10 @@ class MainApplication extends React.Component {
         else {
             if (confirmStop) {
                 this.props.dispatch(end())
-                writeLog(this.props.userID, this.props.activityName, this.props.startTime, this.props.log)
                 clearInterval(this.timer);
-                this.setState({ isStopDialogVisible: false })
+                this.setState({ isDialogVisible: false })
             } else {
-                this.setState({ isStopDialogVisible: true })
+                this.setState({ isDialogVisible: true })
             }
         }
     }
@@ -140,14 +147,23 @@ class MainApplication extends React.Component {
     activity() {
         return (
             <View style={styles.container}>
-                <TextInput
-                    label='Activity'
-                    value={this.props.activityName}
-                    disabled={this.state.activityType !== 'other' || this.props.didStart}
-                    onChangeText={text => this.onActivityNameSet(text)}
-                />
+                <View style={styles.row}>
+                    <TextInput
+                        style={{ flex: 1 }}
+                        label='Activity'
+                        value={this.props.activityName}
+                        disabled={this.state.activityType !== 'other' || this.state.isActivityLocked || this.props.didStart}
+                        onChangeText={text => this.onActivityNameSet(text)}
+                    />
+                    <Icon
+                        reverse
+                        color='#f50'
+                        type='font-awesome'
+                        name={this.state.isActivityLocked || this.props.didStart ? 'lock' : 'unlock'}
+                        onPress={() => this.setState({ isActivityLocked: !this.state.isActivityLocked })} />
+                </View>
 
-                {this.props.didStart ? undefined :
+                {this.props.didStart || this.state.isActivityLocked ? undefined :
                     <Picker
                         selectedValue={this.state.activityType}
                         onValueChange={(itemValue, itemIndex) => this.onActivityChosen(itemValue)} >
@@ -213,8 +229,8 @@ class MainApplication extends React.Component {
                 </ScrollView>
 
                 <Dialog
-                    visible={this.state.isStopDialogVisible}
-                    onDismiss={() => this.setState({ isStopDialogVisible: false })}>
+                    visible={this.state.isDialogVisible}
+                    onDismiss={() => this.setState({ isDialogVisible: false })}>
                     <Dialog.Title>Alert</Dialog.Title>
                     <Dialog.Content>
                         <Text>Stop logging data?</Text>

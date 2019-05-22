@@ -138,12 +138,12 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-filesystem')
     implementation project(':react-native-sensor-manager')
     implementation project(':react-native-location')
     implementation project(':react-native-device-brightness')
     implementation project(':react-native-sensors')
     implementation project(':react-native-vector-icons')
-    implementation project(':react-native-fs')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
