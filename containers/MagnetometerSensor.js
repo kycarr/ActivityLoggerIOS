@@ -56,7 +56,7 @@ class MagnetometerSensor extends React.Component {
 
         return (
             <Text>
-                {data.timestamp} Magnetometer: x={round(data.x)} y={round(data.y)} z={round(data.z)}
+                Magnetometer: x={round(data.x)} y={round(data.y)} z={round(data.z)}
             </Text>
         )
     }

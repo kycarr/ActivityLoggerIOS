@@ -1,4 +1,4 @@
-import { writeLog } from '../constants/files'
+import { writeLog, emailLog } from '../constants/files'
 import {
     SET_USER,
     SET_USERS,
@@ -71,6 +71,7 @@ const rootReducer = (state = initialState, action) => {
                 'data': state.data
             }
             writeLog(state.user, state.activity, state.startTime, endLog)
+            emailLog(state.user, state.activity, state.startTime, endLog)
 
             return {
                 ...state,

@@ -56,7 +56,7 @@ class GyroscopeSensor extends React.Component {
 
         return (
             <Text>
-                {data.timestamp} Gyroscope: x={round(data.x)} y={round(data.y)} z={round(data.z)}
+                Gyroscope: x={round(data.x)} y={round(data.y)} z={round(data.z)}
             </Text>
         )
     }

@@ -1,6 +1,6 @@
 // milliseconds
-export const UPDATE_INTERVAL = 100
-export const LOCATION_INTERVAL = 500
+export const UPDATE_INTERVAL = 500
+export const LOCATION_INTERVAL = 1000
 export const BRIGHTNESS_INTERVAL = 2000
 export const SOUND_INTERVAL = 2000
 

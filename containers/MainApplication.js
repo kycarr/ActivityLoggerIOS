@@ -31,6 +31,7 @@ class MainApplication extends React.Component {
     };
 
     componentDidMount() {
+        console.disableYellowBox = true;
         this.props.dispatch(getUsers())
         this.props.dispatch(getActivities())
     }
@@ -44,10 +45,6 @@ class MainApplication extends React.Component {
     onClear = () => {
         this.props.dispatch(clearUsers())
         this.props.dispatch(clearActivities())
-    }
-
-    onViewFiles = async () => {
-
     }
 
     onUserNameSet = (name) => {
@@ -135,8 +132,8 @@ class MainApplication extends React.Component {
                         selectedValue={this.props.userID}
                         onValueChange={(itemValue, itemIndex) => this.onUserNameSet(itemValue)} >
                         <Picker.Item label="" value="" />
-                        {this.props.users.map(item =>
-                            <Picker.Item label={item} value={item} />
+                        {this.props.users.map((item, i) =>
+                            <Picker.Item label={item} value={item} key={i} />
                         )}
                     </Picker>
                 }
@@ -168,8 +165,8 @@ class MainApplication extends React.Component {
                         selectedValue={this.state.activityType}
                         onValueChange={(itemValue, itemIndex) => this.onActivityChosen(itemValue)} >
                         <Picker.Item label="other" value="other" />
-                        {this.props.activities.map(item =>
-                            <Picker.Item label={item} value={item} />
+                        {this.props.activities.map((item, i) =>
+                            <Picker.Item label={item} value={item} key={i}/>
                         )}
                     </Picker>
                 }
@@ -214,7 +211,6 @@ class MainApplication extends React.Component {
             <View>
                 <Appbar.Header>
                     <Appbar.Content title="Activity Logger" />
-                    <Appbar.Action icon="archive" onPress={() => this.onViewFiles()} />
                     <Appbar.Action icon="delete" onPress={() => this.onClear()} />
                 </Appbar.Header>
 

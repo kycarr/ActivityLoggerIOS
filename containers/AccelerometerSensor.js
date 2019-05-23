@@ -56,7 +56,7 @@ class AccelerometerSensor extends React.Component {
 
         return (
             <Text>
-                {data.timestamp} Accelerometer: x={round(data.x)} y={round(data.y)} z={round(data.z)}
+                Accelerometer: x={round(data.x)} y={round(data.y)} z={round(data.z)}
             </Text>
         )
     }
