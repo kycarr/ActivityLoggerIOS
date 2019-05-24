@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import DeviceBrightness from 'react-native-device-brightness';
 
-import { BRIGHTNESS_INTERVAL } from '../constants/index'
+import { BRIGHTNESS_INTERVAL, formatDate } from '../constants/index'
 import { addLog } from '../constants/actions'
 
 /**
@@ -27,7 +27,11 @@ class BrightnessSensor extends React.Component {
     }
 
     update = (data) => {
-        this.props.dispatch(addLog('brightness', data))
+        const formattedData = {
+            "time": formatDate(new Date()),
+            "brightness": data,
+        }
+        this.props.dispatch(addLog('brightness', formattedData))
         this.setState({ data });
     }
 
@@ -46,9 +50,10 @@ class BrightnessSensor extends React.Component {
 
     render() {
         return (
-            <Text>
-                Brightness: {this.state.data}
-            </Text>
+            <View>
+                <Text style={{fontWeight: 'bold'}}>Brightness:</Text>
+                <Text>{this.state.data}</Text>
+            </View>
         )
     }
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import RNLocation from 'react-native-location';
 
-import { LOCATION_INTERVAL, LOCATION_DISTANCE } from '../constants/index'
+import { LOCATION_INTERVAL, formatDate } from '../constants/index'
 import { addLog } from '../constants/actions'
 
 class LocationSensor extends Component {
@@ -14,7 +14,6 @@ class LocationSensor extends Component {
 
     componentWillMount() {
         RNLocation.configure({
-            distanceFilter: LOCATION_DISTANCE,
             desiredAccuracy: {
                 ios: "best",
                 android: "balancedPowerAccuracy"
@@ -27,8 +26,7 @@ class LocationSensor extends Component {
             // iOS Only
             activityType: "other",
             allowsBackgroundLocationUpdates: true,
-            pausesLocationUpdatesAutomatically: false,
-            showsBackgroundLocationIndicator: false,
+            showsBackgroundLocationIndicator: true,
         })
 
         this._subscribe();
@@ -36,6 +34,21 @@ class LocationSensor extends Component {
 
     componentWillUnmount() {
         this._unsubscribe();
+    }
+
+    update = (data) => {
+        const formattedData = {
+            "time": formatDate(new Date()),
+            "longitude": data.longitude,
+            "latitude": data.latitude,
+            "accuracy": data.accuracy,
+            "altitude": data.altitude,
+            "altitudeAccuracy": data.altitudeAccuracy,
+            "speed": data.speed,
+            "course": data.course,
+        }
+        this.props.dispatch(addLog('location', formattedData))
+        this.setState({ data });
     }
 
     _subscribe = async () => {
@@ -48,10 +61,7 @@ class LocationSensor extends Component {
             this.setState({ isAvailable: granted });
             if (granted) {
                 this._subscription = RNLocation.subscribeToLocationUpdates(locations => {
-                    for (location in locations) {
-                        this.props.dispatch(addLog('location', location))
-                    }
-                    this.setState({ data: locations[0] });
+                    this.update(locations[0])
                 })
             }
         })
@@ -69,9 +79,10 @@ class LocationSensor extends Component {
         }
 
         return (
-            <Text>
-                Location: {JSON.stringify(this.state.data)}
-            </Text>
+            <View>
+                <Text style={{fontWeight: 'bold'}}>Location:</Text>
+                <Text>{JSON.stringify(this.state.data)}</Text>
+            </View>
         );
     }
 }

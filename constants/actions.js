@@ -65,7 +65,7 @@ export const clearActivities = () => async (dispatch) => {
 export const start = (user, activity) => async (dispatch) => {
     dispatch({
         type: SET_START,
-        data: new Date().toISOString()
+        data: new Date().toLocaleString()
     })
 
     await storeUser(user)
@@ -77,5 +77,5 @@ export const start = (user, activity) => async (dispatch) => {
 
 export const end = () => ({
     type: SET_END,
-    data: new Date().toISOString()
+    data: new Date().toLocaleString()
 })

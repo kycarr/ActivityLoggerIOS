@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { magnetometer, setUpdateIntervalForType, SensorTypes } from "react-native-sensors";
 
-import { UPDATE_INTERVAL, round } from '../constants/index'
+import { UPDATE_INTERVAL, round, formatDate } from '../constants/index'
 import { addLog } from '../constants/actions'
 
 /**
@@ -28,7 +28,13 @@ class MagnetometerSensor extends React.Component {
     }
 
     update = (data) => {
-        this.props.dispatch(addLog('magnetometer', data))
+        const formattedData = {
+            "time": formatDate(new Date()),
+            "x": data.x,
+            "y": data.y,
+            "z": data.z,
+        }
+        this.props.dispatch(addLog('magnetometer', formattedData))
         this.setState({ data });
     }
 
@@ -55,9 +61,10 @@ class MagnetometerSensor extends React.Component {
         const data = this.state.data
 
         return (
-            <Text>
-                Magnetometer: x={round(data.x)} y={round(data.y)} z={round(data.z)}
-            </Text>
+            <View>
+                <Text style={{fontWeight: 'bold'}}>Magnetometer:</Text>
+                <Text>x={round(data.x)} y={round(data.y)} z={round(data.z)}</Text>
+            </View>
         )
     }
 }

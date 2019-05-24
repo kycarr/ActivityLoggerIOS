@@ -20,5 +20,5 @@ export const loadLog = async (id, activity, session) => {
 
 export const emailLog = async (id, activity, session) => {
     const content = await loadLog(id, activity, session)
-    Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${SUPPORT_SUBJECT}&body=${content}`)
+    Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${SUPPORT_SUBJECT} (${id}, ${activity}, ${session})&body=${content}`)
 }

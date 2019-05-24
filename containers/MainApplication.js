@@ -51,14 +51,14 @@ class MainApplication extends React.Component {
         this.props.dispatch(setUser(name))
     }
 
+    onActivityNameSet = (name) => {
+        this.props.dispatch(setActivity(name))
+    }
+    
     onActivityChosen = (type) => {
         const name = type === 'other' ? '' : type
         this.setState({ activityType: type })
         this.onActivityNameSet(name)
-    }
-
-    onActivityNameSet = (name) => {
-        this.props.dispatch(setActivity(name))
     }
 
     onToggleTimer = (confirmStop) => {
@@ -184,7 +184,7 @@ class MainApplication extends React.Component {
                     mode="contained"
                     disabled={this.props.userID === '' || this.props.activityName === ''}
                     onPress={() => this.onToggleTimer(false)}>
-                    {this.props.didStart ? 'STOP' : 'START'}
+                    {this.props.didStart ? 'STOP RECORDING' : 'START RECORDING'}
                 </Button>
             </View>
         )
