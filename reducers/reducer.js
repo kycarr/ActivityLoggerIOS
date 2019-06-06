@@ -47,8 +47,9 @@ const rootReducer = (state = initialState, action) => {
         case SET_START:
             const startTime = action.data
             const startLog = {
-                'userID': state.user,
-                'activity': state.activity,
+                'deviceID': action.id,
+                'userID': state.user.toLowerCase(),
+                'activity': state.activity.toLowerCase(),
                 'startTime': startTime,
                 'endTime': '',
                 'data': {},

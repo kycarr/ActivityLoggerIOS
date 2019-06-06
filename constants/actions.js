@@ -1,3 +1,4 @@
+import DeviceInfo from 'react-native-device-info';
 import {
     storeUser,
     loadUsers,
@@ -65,7 +66,8 @@ export const clearActivities = () => async (dispatch) => {
 export const start = (user, activity) => async (dispatch) => {
     dispatch({
         type: SET_START,
-        data: new Date().toLocaleString()
+        data: new Date().toLocaleString(),
+        id: DeviceInfo.getUniqueID(),
     })
 
     await storeUser(user)

@@ -3,6 +3,7 @@ package com.activityios;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.benwixen.rnfilesystem.RNFileSystemPackage;
 import com.sensormanager.SensorManagerPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
             new RNGestureHandlerPackage(),
             new RNFileSystemPackage(),
             new SensorManagerPackage(),

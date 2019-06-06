@@ -2,7 +2,8 @@ import FileSystem from 'react-native-filesystem';
 import { Linking } from 'react-native';
 
 export const APP_DIRECTORY = 'activity-logger'
-export const SUPPORT_EMAIL = 'kcarr@ict.usc.edu'
+// export const SUPPORT_EMAIL = 'kcarr@ict.usc.edu'
+export const SUPPORT_EMAIL = 'maryvel@gmail.com'
 export const SUPPORT_SUBJECT = 'Activity Log File'
 
 export const writeLog = async (id, activity, session, content) => {

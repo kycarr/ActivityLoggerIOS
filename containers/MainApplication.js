@@ -54,7 +54,7 @@ class MainApplication extends React.Component {
     onActivityNameSet = (name) => {
         this.props.dispatch(setActivity(name))
     }
-    
+
     onActivityChosen = (type) => {
         const name = type === 'other' ? '' : type
         this.setState({ activityType: type })
@@ -166,7 +166,7 @@ class MainApplication extends React.Component {
                         onValueChange={(itemValue, itemIndex) => this.onActivityChosen(itemValue)} >
                         <Picker.Item label="other" value="other" />
                         {this.props.activities.map((item, i) =>
-                            <Picker.Item label={item} value={item} key={i}/>
+                            <Picker.Item label={item} value={item} key={i} />
                         )}
                     </Picker>
                 }
@@ -211,7 +211,6 @@ class MainApplication extends React.Component {
             <View>
                 <Appbar.Header>
                     <Appbar.Content title="Activity Logger" />
-                    <Appbar.Action icon="delete" onPress={() => this.onClear()} />
                 </Appbar.Header>
 
                 <ScrollView>

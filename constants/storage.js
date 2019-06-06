@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native"
 
 export const storeUser = async (user) => {
+    user = user.toLowerCase()
     const users = await loadUsers()
     if (users.includes(user)) {
         return
@@ -18,6 +19,7 @@ export const loadUsers = async () => {
 }
 
 export const storeActivity = async (activity) => {
+    activity = activity.toLowerCase()
     const activities = await loadActivities()
     if (activities.includes(activity)) {
         return
@@ -28,10 +30,21 @@ export const storeActivity = async (activity) => {
 
 export const loadActivities = async () => {
     const value = await retrieveData('activities')
-    if (value === null || value === undefined) {
-        return []
+    var activities = [
+        'standing',
+        'walking',
+        'sitting',
+        'laying down',
+        'waiting in line',
+        'eating',
+        'on computer',
+        'on phone activity'
+    ]
+    if (value) {
+        activities = activities.concat(JSON.parse(value))
     }
-    return JSON.parse(value)
+
+    return [...new Set(activities)]
 }
 
 
