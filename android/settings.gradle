@@ -1,4 +1,6 @@
 rootProject.name = 'ActivityIOS'
+include ':react-native-video'
+project(':react-native-video').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-video/android-exoplayer')
 include ':react-native-mail-compose'
 project(':react-native-mail-compose').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-mail-compose/android')
 include ':react-native-filesystem-v1'
