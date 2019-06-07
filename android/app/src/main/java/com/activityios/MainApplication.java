@@ -3,9 +3,10 @@ package com.activityios;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.mailcompose.RNMailComposePackage;
+import com.benwixen.rnfilesystem.RNFileSystemPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.benwixen.rnfilesystem.RNFileSystemPackage;
 import com.sensormanager.SensorManagerPackage;
 import com.github.reactnativecommunity.location.RNLocationPackage;
 import org.capslock.RNDeviceBrightness.RNDeviceBrightness;
@@ -31,9 +32,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNMailComposePackage(),
+            new RNFileSystemPackage(),
             new RNDeviceInfo(),
             new RNGestureHandlerPackage(),
-            new RNFileSystemPackage(),
             new SensorManagerPackage(),
             new RNLocationPackage(),
             new RNDeviceBrightness(),

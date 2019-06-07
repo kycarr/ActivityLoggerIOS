@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import RNLocation from 'react-native-location';
 
 import { LOCATION_INTERVAL, formatDate } from '../constants/index'
-import { addLog } from '../constants/actions'
+import { writeLog } from '../storage/files'
 
 class LocationSensor extends Component {
     state = {
@@ -47,7 +47,7 @@ class LocationSensor extends Component {
             "speed": data.speed,
             "course": data.course,
         }
-        this.props.dispatch(addLog('location', formattedData))
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', formattedData)
         this.setState({ data });
     }
 
@@ -89,7 +89,9 @@ class LocationSensor extends Component {
 
 const mapStateToProps = state => {
     return {
-        data: state.logs['location']
+        user: state.user,
+        activity: state.activity,
+        session: state.start_time,
     };
 };
 

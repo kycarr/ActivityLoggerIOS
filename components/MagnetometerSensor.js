@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { gyroscope, setUpdateIntervalForType, SensorTypes } from "react-native-sensors";
+import { magnetometer, setUpdateIntervalForType, SensorTypes } from "react-native-sensors";
 
 import { UPDATE_INTERVAL, round, formatDate } from '../constants/index'
-import { addLog } from '../constants/actions'
+import { writeLog } from '../storage/files'
 
 /**
- * Access the device gyroscope sensor to respond to changes in rotation in 3d space.
+ * Access the device magnetometer sensor(s) to respond to measure the changes in the magnetic field.
  */
-class GyroscopeSensor extends React.Component {
+class MagnetometerSensor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,7 +19,7 @@ class GyroscopeSensor extends React.Component {
     }
 
     componentDidMount() {
-        setUpdateIntervalForType(SensorTypes.gyroscope, UPDATE_INTERVAL);
+        setUpdateIntervalForType(SensorTypes.magnetometer, UPDATE_INTERVAL);
         this._toggle();
     }
 
@@ -34,7 +34,7 @@ class GyroscopeSensor extends React.Component {
             "y": data.y,
             "z": data.z,
         }
-        this.props.dispatch(addLog('gyroscope', formattedData))
+        writeLog(this.props.user, this.props.activity, this.props.session, 'magnetometer', formattedData)
         this.setState({ data });
     }
 
@@ -47,7 +47,7 @@ class GyroscopeSensor extends React.Component {
     };
 
     _subscribe = async () => {
-        this._subscription = gyroscope.subscribe(data =>
+        this._subscription = magnetometer.subscribe(data =>
             this.update(data)
         );
     };
@@ -62,7 +62,7 @@ class GyroscopeSensor extends React.Component {
 
         return (
             <View>
-                <Text style={{fontWeight: 'bold'}}>Gyroscope:</Text>
+                <Text style={{fontWeight: 'bold'}}>Magnetometer:</Text>
                 <Text>x={round(data.x)} y={round(data.y)} z={round(data.z)}</Text>
             </View>
         )
@@ -71,8 +71,10 @@ class GyroscopeSensor extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        data: state.logs['gyroscope']
+        user: state.user,
+        activity: state.activity,
+        session: state.start_time,
     };
 };
 
-export default connect(mapStateToProps)(GyroscopeSensor);
+export default connect(mapStateToProps)(MagnetometerSensor);

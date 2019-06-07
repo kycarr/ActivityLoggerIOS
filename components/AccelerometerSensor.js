@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import { accelerometer, setUpdateIntervalForType, SensorTypes } from "react-native-sensors";
 
 import { UPDATE_INTERVAL, round, formatDate } from '../constants/index'
-import { addLog } from '../constants/actions'
+import { writeLog } from '../storage/files'
 
 /**
  * Access the device accelerometer sensor(s) to respond to changes in acceleration in 3d space.
@@ -34,7 +34,7 @@ class AccelerometerSensor extends React.Component {
             "y": data.y,
             "z": data.z,
         }
-        this.props.dispatch(addLog('accelerometer', formattedData))
+        writeLog(this.props.user, this.props.activity, this.props.session, 'accelerometer', formattedData)
         this.setState({ data });
     }
 
@@ -71,7 +71,9 @@ class AccelerometerSensor extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        data: state.logs['accelerometer']
+        user: state.user,
+        activity: state.activity,
+        session: state.start_time,
     };
 };
 

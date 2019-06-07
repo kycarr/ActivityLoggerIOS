@@ -1,30 +1,22 @@
-import * as React from 'react';
-import { Picker, ScrollView, StyleSheet, View } from 'react-native';
+import React from 'react'
+import { Picker, ScrollView, StyleSheet, View } from 'react-native'
 import { Icon, Text } from 'react-native-elements'
-import { Appbar, Button, Dialog, Divider, TextInput } from 'react-native-paper';
-import { connect } from 'react-redux';
+import { Button, Dialog, TextInput } from 'react-native-paper'
+import { connect } from 'react-redux'
 
-import {
-    setUser,
-    setActivity,
-    start,
-    end,
-    getUsers,
-    getActivities,
-    clearUsers,
-    clearActivities
-} from '../constants/actions'
+import { startRecording, stopRecording } from '../redux/actions'
+import { loadUsers, loadActivities } from '../storage/storage'
 
-import AccelerometerSensor from './AccelerometerSensor'
-import BrightnessSensor from './BrightnessSensor'
-import GyroscopeSensor from './GyroscopeSensor'
-import LocationSensor from './LocationSensor'
-import MagnetometerSensor from './MagnetometerSensor'
+import Sensors from './Sensors'
 
 class MainApplication extends React.Component {
     state = {
+        user: '',
+        activity: '',
         activityType: 'other',
         elapsedTime: '00:00:00',
+
+        isRecording: false,
         isUserLocked: false,
         isActivityLocked: false,
         isDialogVisible: false,
@@ -32,57 +24,32 @@ class MainApplication extends React.Component {
 
     componentDidMount() {
         console.disableYellowBox = true;
-        this.props.dispatch(getUsers())
-        this.props.dispatch(getActivities())
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timer);
-    }
-
-
-
-    onClear = () => {
-        this.props.dispatch(clearUsers())
-        this.props.dispatch(clearActivities())
-    }
-
-    onUserNameSet = (name) => {
-        this.props.dispatch(setUser(name))
-    }
-
-    onActivityNameSet = (name) => {
-        this.props.dispatch(setActivity(name))
     }
 
     onActivityChosen = (type) => {
         const name = type === 'other' ? '' : type
-        this.setState({ activityType: type })
-        this.onActivityNameSet(name)
+        this.setState({ activityType: type, activity: name })
     }
 
     onToggleTimer = (confirmStop) => {
-        // timer hasn't started, start it
-        if (!this.props.didStart) {
-            this.props.dispatch(start(this.props.userID, this.props.activityName))
-            this.timer = setInterval(() => {
-                this.setState({ elapsedTime: this.getTime() });
-            }, 1000);
+        // start the timer
+        if (!this.state.isRecording) {
+            this.props.dispatch(startRecording(this.state.userID, this.state.activityName))
+            this.timer = setInterval(() => { this.setState({ elapsedTime: this.getTime() }); }, 1000);
             this.setState({ elapsedTime: '00:00:00' })
         }
-        // timer is being stopped
+        // stop the timer
         else {
             if (confirmStop) {
-                this.props.dispatch(end())
+                this.props.dispatch(stopRecording())
                 clearInterval(this.timer);
                 this.setState({ isDialogVisible: false })
-            } else {
+            }
+            else {
                 this.setState({ isDialogVisible: true })
             }
         }
     }
-
-
 
     getTime = () => {
         if (this.props.startTime === '') {
@@ -106,8 +73,6 @@ class MainApplication extends React.Component {
         return pad(s / 3.6e6 | 0) + ':' + pad((s % 3.6e6) / 6e4 | 0) + ':' + pad((s % 6e4) / 1000 | 0)
     }
 
-
-
     userID() {
         return (
             <View style={styles.container}>
@@ -115,28 +80,27 @@ class MainApplication extends React.Component {
                     <TextInput
                         style={{ flex: 1 }}
                         label='User ID'
-                        value={this.props.userID}
-                        disabled={this.state.isUserLocked || this.props.didStart}
-                        onChangeText={text => this.onUserNameSet(text)}
+                        value={this.state.userID}
+                        disabled={this.state.isUserLocked || this.state.isRecording}
+                        onChangeText={text => this.setState({ user: text })}
                     />
                     <Icon
                         reverse
                         color='#f50'
                         type='font-awesome'
-                        name={this.state.isUserLocked || this.props.didStart ? 'lock' : 'unlock'}
+                        name={this.state.isUserLocked || this.state.isRecording ? 'lock' : 'unlock'}
                         onPress={() => this.setState({ isUserLocked: !this.state.isUserLocked })} />
                 </View>
 
-                {this.props.didStart || this.state.isUserLocked ? undefined :
+                {/* {this.state.isRecording || this.state.isUserLocked ? undefined :
                     <Picker
                         selectedValue={this.props.userID}
                         onValueChange={(itemValue, itemIndex) => this.onUserNameSet(itemValue)} >
-                        <Picker.Item label="" value="" />
                         {this.props.users.map((item, i) =>
                             <Picker.Item label={item} value={item} key={i} />
                         )}
                     </Picker>
-                }
+                } */}
             </View>
         )
     }
@@ -148,19 +112,19 @@ class MainApplication extends React.Component {
                     <TextInput
                         style={{ flex: 1 }}
                         label='Activity'
-                        value={this.props.activityName}
-                        disabled={this.state.activityType !== 'other' || this.state.isActivityLocked || this.props.didStart}
-                        onChangeText={text => this.onActivityNameSet(text)}
+                        value={this.state.activity}
+                        disabled={this.state.activityType !== 'other' || this.state.isActivityLocked || this.state.isRecording}
+                        onChangeText={text => this.setState({ activity: text })}
                     />
                     <Icon
                         reverse
                         color='#f50'
                         type='font-awesome'
-                        name={this.state.isActivityLocked || this.props.didStart ? 'lock' : 'unlock'}
+                        name={this.state.isActivityLocked || this.state.isRecording ? 'lock' : 'unlock'}
                         onPress={() => this.setState({ isActivityLocked: !this.state.isActivityLocked })} />
                 </View>
 
-                {this.props.didStart || this.state.isActivityLocked ? undefined :
+                {/* {this.state.isRecording || this.state.isActivityLocked ? undefined :
                     <Picker
                         selectedValue={this.state.activityType}
                         onValueChange={(itemValue, itemIndex) => this.onActivityChosen(itemValue)} >
@@ -169,7 +133,7 @@ class MainApplication extends React.Component {
                             <Picker.Item label={item} value={item} key={i} />
                         )}
                     </Picker>
-                }
+                } */}
             </View>
         )
     }
@@ -182,26 +146,10 @@ class MainApplication extends React.Component {
                 <Text h4>{this.state.elapsedTime}</Text>
                 <Button
                     mode="contained"
-                    disabled={this.props.userID === '' || this.props.activityName === ''}
+                    disabled={this.state.userID === '' || this.state.activityName === ''}
                     onPress={() => this.onToggleTimer(false)}>
-                    {this.props.didStart ? 'STOP RECORDING' : 'START RECORDING'}
+                    {this.state.isRecording ? 'STOP RECORDING' : 'START RECORDING'}
                 </Button>
-            </View>
-        )
-    }
-
-    sensors() {
-        if (!this.props.didStart) {
-            return <View />
-        }
-
-        return (
-            <View style={styles.container}>
-                <AccelerometerSensor />
-                <BrightnessSensor />
-                <LocationSensor />
-                <GyroscopeSensor />
-                <MagnetometerSensor />
             </View>
         )
     }
@@ -209,18 +157,11 @@ class MainApplication extends React.Component {
     render() {
         return (
             <View>
-                <Appbar.Header>
-                    <Appbar.Content title="Activity Logger" />
-                </Appbar.Header>
-
                 <ScrollView>
                     {this.userID()}
-                    <Divider />
                     {this.activity()}
-                    <Divider />
                     {this.logger()}
-                    <Divider />
-                    {this.sensors()}
+                    <Sensors />
                 </ScrollView>
 
                 <Dialog
@@ -252,17 +193,4 @@ const styles = StyleSheet.create({
     }
 });
 
-const mapStateToProps = state => {
-    return {
-        userID: state.user,
-        activityName: state.activity,
-        startTime: state.startTime,
-        endTime: state.endTime,
-        activities: state.activities,
-        users: state.users,
-        didStart: state.isRecording,
-        log: state.logs,
-    };
-};
-
-export default connect(mapStateToProps)(MainApplication);
+export default connect()(MainApplication);

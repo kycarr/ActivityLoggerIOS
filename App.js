@@ -3,19 +3,15 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 
-import MainApplication from './containers/MainApplication';
-import reducer from './reducers/reducer'
+import MainApplication from './components/MainApplication';
+import store from './redux/store'
 
-const middleware = [thunk]
-const store = createStore(
-    reducer,
-    applyMiddleware(...middleware)
-)
+const m_store = createStore(store, applyMiddleware(...[thunk]))
 
 export default class Main extends React.Component {
   render() {
     return (
-      <Provider store={store} >
+      <Provider store={m_store} >
         <MainApplication />
       </Provider>
     );

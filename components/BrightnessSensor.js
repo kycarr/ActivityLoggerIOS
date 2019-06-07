@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import DeviceBrightness from 'react-native-device-brightness';
 
 import { BRIGHTNESS_INTERVAL, formatDate } from '../constants/index'
-import { addLog } from '../constants/actions'
+import { writeLog } from '../storage/files'
 
 /**
  * 
@@ -31,7 +31,7 @@ class BrightnessSensor extends React.Component {
             "time": formatDate(new Date()),
             "brightness": data,
         }
-        this.props.dispatch(addLog('brightness', formattedData))
+        writeLog(this.props.user, this.props.activity, this.props.session, 'brightness', formattedData)
         this.setState({ data });
     }
 
@@ -60,7 +60,9 @@ class BrightnessSensor extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        data: state.logs['brightness']
+        user: state.user,
+        activity: state.activity,
+        session: state.start_time,
     };
 };
 

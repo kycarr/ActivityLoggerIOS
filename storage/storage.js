@@ -1,14 +1,4 @@
-import { AsyncStorage } from "react-native"
-
-export const storeUser = async (user) => {
-    user = user.toLowerCase()
-    const users = await loadUsers()
-    if (users.includes(user)) {
-        return
-    }
-    users.push(user)
-    AsyncStorage.setItem('users', JSON.stringify(users));
-}
+import { AsyncStorage } from 'react-native'
 
 export const loadUsers = async () => {
     const value = await retrieveData('users')
@@ -16,16 +6,6 @@ export const loadUsers = async () => {
         return []
     }
     return JSON.parse(value)
-}
-
-export const storeActivity = async (activity) => {
-    activity = activity.toLowerCase()
-    const activities = await loadActivities()
-    if (activities.includes(activity)) {
-        return
-    }
-    activities.push(activity)
-    AsyncStorage.setItem('activities', JSON.stringify(activities));
 }
 
 export const loadActivities = async () => {
@@ -47,14 +27,40 @@ export const loadActivities = async () => {
     return [...new Set(activities)]
 }
 
+export const storeUser = async (user) => {
+    const users = await loadUsers()
+    if (users.includes(user)) {
+        return
+    }
+    users.push(user)
+    storeData('users', JSON.stringify(users));
+}
 
-export const storeData = async (key, data) => {
+export const storeActivity = async (activity) => {
+    const activities = await loadActivities()
+    if (activities.includes(activity)) {
+        return
+    }
+    activities.push(activity)
+    storeData('activities', JSON.stringify(activities));
+}
+
+export const clearUsers = () => {
+    storeData('users', JSON.stringify([]))
+}
+
+export const clearActivities = () => {
+    storeData('activities', JSON.stringify([]))
+}
+
+
+const storeData = async (key, data) => {
     try {
         await AsyncStorage.setItem(key, data);
     } catch (error) { }
 }
 
-export const retrieveData = async (key) => {
+const retrieveData = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
         if (value !== null) {
