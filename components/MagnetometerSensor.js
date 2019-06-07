@@ -28,12 +28,7 @@ class MagnetometerSensor extends React.Component {
     }
 
     update = (data) => {
-        const formattedData = {
-            "time": formatDate(new Date()),
-            "x": data.x,
-            "y": data.y,
-            "z": data.z,
-        }
+        const formattedData = `${formatDate(new Date())}: (${data.x}, ${data.y}, ${data.z})`
         writeLog(this.props.user, this.props.activity, this.props.session, 'magnetometer', formattedData)
         this.setState({ data });
     }

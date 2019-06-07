@@ -27,10 +27,7 @@ class BrightnessSensor extends React.Component {
     }
 
     update = (data) => {
-        const formattedData = {
-            "time": formatDate(new Date()),
-            "brightness": data,
-        }
+        const formattedData = `${formatDate(new Date())}: ${data}`
         writeLog(this.props.user, this.props.activity, this.props.session, 'brightness', formattedData)
         this.setState({ data });
     }

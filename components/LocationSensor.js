@@ -37,17 +37,15 @@ class LocationSensor extends Component {
     }
 
     update = (data) => {
-        const formattedData = {
-            "time": formatDate(new Date()),
-            "longitude": data.longitude,
-            "latitude": data.latitude,
-            "accuracy": data.accuracy,
-            "altitude": data.altitude,
-            "altitudeAccuracy": data.altitudeAccuracy,
-            "speed": data.speed,
-            "course": data.course,
-        }
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', formattedData)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `time: ${formatDate(new Date())}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `longitude: ${data.longitude}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `latitude: ${data.latitude}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `accuracy: ${data.accuracy}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `altitude: ${data.altitude}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `altitudeAccuracy: ${data.altitudeAccuracy}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `speed: ${data.speed}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `course: ${data.course}`)
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', '')
         this.setState({ data });
     }
 

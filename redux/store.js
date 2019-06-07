@@ -1,3 +1,6 @@
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
 import { START, STOP } from './actions';
 
 const initialState = {
@@ -24,9 +27,14 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 end_time: action.time,
             }
+
+        default:
+            break
     }
+    
+    return state
 }
 
-export default store = (state = initialState, action) => {
-    return rootReducer(state, action)
-}
+const store = createStore(rootReducer, applyMiddleware(...[thunk]))
+
+export default store
