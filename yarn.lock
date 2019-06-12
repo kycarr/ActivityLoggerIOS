@@ -5188,9 +5188,10 @@ react-native-mail-compose@^0.0.6:
   resolved "https://registry.yarnpkg.com/react-native-mail-compose/-/react-native-mail-compose-0.0.6.tgz#03716429103fbc17cf9d1b6ebe43cbb028458296"
   integrity sha512-00vJhqanyBtiF0g8i3mKScE/EXbtlHoQO/4O+HH/ENPNlegPcM2i8KL551sQnafn4Qc31XEbIiQo6xy+f8hKYQ==
 
-"react-native-mail@github:esutton/react-native-mail":
-  version "0.2.4"
-  resolved "https://codeload.github.com/esutton/react-native-mail/tar.gz/d2116f01af475ae3c8d62de121c987f35593e8c6"
+react-native-mail@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-mail/-/react-native-mail-3.0.7.tgz#07e6aca43f6f1f85f3e58e96e7fcd16b31a927b8"
+  integrity sha512-FHe4kKJKAGuCPPWcDwaRSjdUhEE4IWIsVtTZ05dgD/MgOm00isYmM20zuJHla7oiHVQ2HmzGji76g6IuhIrCjw==
 
 react-native-paper@^2.15.2:
   version "2.16.0"

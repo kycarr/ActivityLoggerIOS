@@ -1,8 +1,8 @@
 import FileSystem from 'react-native-filesystem-v1';
-import Mailer from 'react-native-mail';
+import MailCompose from 'react-native-mail-compose';
 
 export const APP_DIRECTORY = 'activity-logger'
-export const SUPPORT_EMAIL = 'kcarr@ict.usc.edu'
+export const SUPPORT_EMAIL = 'activityloggerict@gmail.com'
 export const SUPPORT_SUBJECT = 'Activity Log File'
 
 export const writeLog = async (id, activity, session, log_type, content) => {
@@ -35,17 +35,54 @@ export const emailLog = async (id, activity, session) => {
   session = session.replace(/\//g, '.')
 
   const subject = `${SUPPORT_SUBJECT}: ${id} ${activity} ${session}`
-  const log = FileSystem.absolutePath(`${APP_DIRECTORY}/${id}/${activity}/${session}/log.csv`)
+  const log = await loadLog(id, activity, session, 'log')
+  const accelerometer = await loadLog(id, activity, session, 'accelerometer')
+  const gyroscope = await loadLog(id, activity, session, 'gyroscope')
+  const magnetometer = await loadLog(id, activity, session, 'magnetometer')
+  const location = await loadLog(id, activity, session, 'location')
+  const brightness = await loadLog(id, activity, session, 'brightness')
 
-  Mailer.mail({
+  await MailCompose.send({
+    toRecipients: [SUPPORT_EMAIL, 'kaylacar@usc.edu'],
     subject: subject,
-    recipients: [SUPPORT_EMAIL],
-    isHTML: true,
-    body: '',
-    attachment: {
-      path: log,
-      type: 'csv',
-      name: 'log.csv',
-    }
-  }, (error, event) => { });
+    text: '',
+    attachments: [
+      {
+        filename: 'log',
+        ext: '.csv',
+        mimeType: 'csv',
+        text: log,
+      },
+      {
+        filename: 'accelerometer',
+        ext: '.csv',
+        mimeType: 'csv',
+        text: accelerometer,
+      },
+      {
+        filename: 'gyroscope',
+        ext: '.csv',
+        mimeType: 'csv',
+        text: gyroscope,
+      },
+      {
+        filename: 'magnetometer',
+        ext: '.csv',
+        mimeType: 'csv',
+        text: magnetometer,
+      },
+      {
+        filename: 'location',
+        ext: '.csv',
+        mimeType: 'csv',
+        text: location,
+      },
+      {
+        filename: 'brightness',
+        ext: '.csv',
+        mimeType: 'csv',
+        text: brightness,
+      },
+    ],
+  });
 }

@@ -64,6 +64,8 @@
 		D335949022970C5A00DD6EC6 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D335948D22970C4D00DD6EC6 /* libRCTPushNotification.a */; };
 		D3836C01229389FC00331ACE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3836BD4229389FC00331ACE /* CoreLocation.framework */; };
 		D3FDFF4322B1874700C8A250 /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3FDFF3D22B1871900C8A250 /* libRNMail.a */; };
+		D3FDFFC922B1A00700C8A250 /* RNMailCompose.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FDFFC822B1A00700C8A250 /* RNMailCompose.swift */; };
+		D3FDFFCB22B1A0AD00C8A250 /* RNMailCompose.m in Sources */ = {isa = PBXBuildFile; fileRef = D3FDFFCA22B1A0AD00C8A250 /* RNMailCompose.m */; };
 		EB3B629FC2264E3A92B170DF /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EF51F0ED9B8458AB9EDEBFC /* MaterialIcons.ttf */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
@@ -517,6 +519,9 @@
 		D335948722970C4D00DD6EC6 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D3836BD4229389FC00331ACE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D3FDFF0722B1871900C8A250 /* RNMail.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNMail.xcodeproj; path = "../node_modules/react-native-mail/RNMail.xcodeproj"; sourceTree = "<group>"; };
+		D3FDFFC822B1A00700C8A250 /* RNMailCompose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNMailCompose.swift; sourceTree = "<group>"; };
+		D3FDFFCA22B1A0AD00C8A250 /* RNMailCompose.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNMailCompose.m; sourceTree = "<group>"; };
+		D3FDFFCF22B1A1DD00C8A250 /* ActivityIOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ActivityIOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		D6731F5A358F49FD9409551B /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		E6249EF6BF4C4E13A0665B31 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		E8ADD820F2384F5CB39A962A /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -656,13 +661,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		04E4919D86AA2672464CAEE0 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -686,6 +684,7 @@
 		13B07FAE1A68108700A75B9A /* ActivityIOS */ = {
 			isa = PBXGroup;
 			children = (
+				D3FDFFC822B1A00700C8A250 /* RNMailCompose.swift */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -693,6 +692,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				D3FDFFCA22B1A0AD00C8A250 /* RNMailCompose.m */,
+				D3FDFFCF22B1A1DD00C8A250 /* ActivityIOS-Bridging-Header.h */,
 			);
 			name = ActivityIOS;
 			sourceTree = "<group>";
@@ -819,7 +820,6 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				1D6D835836204ABAADDCB790 /* Resources */,
 				D3AAF67F229353CE001F3908 /* Recovered References */,
-				04E4919D86AA2672464CAEE0 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1640,8 +1640,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3FDFFC922B1A00700C8A250 /* RNMailCompose.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				D3FDFFCB22B1A0AD00C8A250 /* RNMailCompose.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1693,6 +1695,7 @@
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 4RX84Q9D57;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1727,6 +1730,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 4RX84Q9D57;
@@ -1786,6 +1790,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.ict.activitylogger;
 				PRODUCT_NAME = ActivityIOS;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/kcarr/Documents/ActivityIOS/ios/ActivityIOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1821,6 +1826,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.usc.ict.activitylogger;
 				PRODUCT_NAME = ActivityIOS;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/kcarr/Documents/ActivityIOS/ios/ActivityIOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2032,6 +2038,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2079,6 +2086,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

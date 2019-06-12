@@ -3,6 +3,7 @@ package com.activityios;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.mailcompose.RNMailComposePackage;
 import com.chirag.RNMail.RNMail;
 import com.brentvatne.react.ReactVideoPackage;
 import com.benwixen.rnfilesystem.RNFileSystemPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNMailComposePackage(),
             new RNMail(),
             new ReactVideoPackage(),
             new RNFileSystemPackage(),
