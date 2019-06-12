@@ -26,7 +26,7 @@ class MainApplication extends React.Component {
     };
 
     componentDidMount() {
-        console.disableYellowBox = true;
+        // console.disableYellowBox = true;
         this.load()
     }
 

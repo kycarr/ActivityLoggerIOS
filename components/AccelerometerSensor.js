@@ -21,6 +21,7 @@ class AccelerometerSensor extends React.Component {
     componentDidMount() {
         setUpdateIntervalForType(SensorTypes.accelerometer, UPDATE_INTERVAL);
         this._toggle();
+        writeLog(this.props.user, this.props.activity, this.props.session, 'accelerometer', `time,x,y,z`)
     }
 
     componentWillUnmount() {
@@ -28,7 +29,7 @@ class AccelerometerSensor extends React.Component {
     }
 
     update = (data) => {
-        const formattedData = `${formatDate(new Date())}: (${data.x}, ${data.y}, ${data.z})`
+        const formattedData = `"${formatDate(new Date())}",${data.x},${data.y},${data.z}`
         writeLog(this.props.user, this.props.activity, this.props.session, 'accelerometer', formattedData)
         this.setState({ data });
     }

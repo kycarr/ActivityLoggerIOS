@@ -1,0 +1,6 @@
+framework module Pods_ActivityIOS_tvOSTests {
+  umbrella header "Pods-ActivityIOS-tvOSTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

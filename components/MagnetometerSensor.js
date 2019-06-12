@@ -21,6 +21,7 @@ class MagnetometerSensor extends React.Component {
     componentDidMount() {
         setUpdateIntervalForType(SensorTypes.magnetometer, UPDATE_INTERVAL);
         this._toggle();
+        writeLog(this.props.user, this.props.activity, this.props.session, 'magnetometer', `time,x,y,z`)
     }
 
     componentWillUnmount() {
@@ -28,7 +29,7 @@ class MagnetometerSensor extends React.Component {
     }
 
     update = (data) => {
-        const formattedData = `${formatDate(new Date())}: (${data.x}, ${data.y}, ${data.z})`
+        const formattedData = `"${formatDate(new Date())}",${data.x},${data.y},${data.z}`
         writeLog(this.props.user, this.props.activity, this.props.session, 'magnetometer', formattedData)
         this.setState({ data });
     }

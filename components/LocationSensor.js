@@ -30,6 +30,7 @@ class LocationSensor extends Component {
         })
 
         this._subscribe();
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `time,longitude,latitude,accuracy,altitude,altitudeAccuracy,speed,course`)
     }
 
     componentWillUnmount() {
@@ -37,15 +38,8 @@ class LocationSensor extends Component {
     }
 
     update = (data) => {
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `time: ${formatDate(new Date())}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `longitude: ${data.longitude}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `latitude: ${data.latitude}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `accuracy: ${data.accuracy}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `altitude: ${data.altitude}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `altitudeAccuracy: ${data.altitudeAccuracy}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `speed: ${data.speed}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', `course: ${data.course}`)
-        writeLog(this.props.user, this.props.activity, this.props.session, 'location', '')
+        const formattedData = `"${formatDate(new Date())}",${data.longitude},${data.latitude},${data.accuracy},${data.altitude},${data.altitudeAccuracy},${data.speed},${data.course}`
+        writeLog(this.props.user, this.props.activity, this.props.session, 'location', formattedData)
         this.setState({ data });
     }
 

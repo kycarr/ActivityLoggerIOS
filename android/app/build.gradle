@@ -138,8 +138,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-mail')
     implementation project(':react-native-video')
-    implementation project(':react-native-mail-compose')
     implementation project(':react-native-filesystem-v1')
     implementation project(':react-native-device-info')
     implementation project(':react-native-gesture-handler')

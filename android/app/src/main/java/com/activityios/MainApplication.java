@@ -3,8 +3,8 @@ package com.activityios;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.chirag.RNMail.RNMail;
 import com.brentvatne.react.ReactVideoPackage;
-import com.reactlibrary.mailcompose.RNMailComposePackage;
 import com.benwixen.rnfilesystem.RNFileSystemPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -33,8 +33,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNMail(),
             new ReactVideoPackage(),
-            new RNMailComposePackage(),
             new RNFileSystemPackage(),
             new RNDeviceInfo(),
             new RNGestureHandlerPackage(),

@@ -23,10 +23,10 @@ export const startRecording = (user, activity) => async (dispatch) => {
     storeUser(user)
     storeActivity(activity)
 
-    writeLog(user, activity, time, 'log', `user: ${user}`)
-    writeLog(user, activity, time, 'log', `activity: ${activity}`)
-    writeLog(user, activity, time, 'log', `device_id: ${device_id}`)
-    writeLog(user, activity, time, 'log', `start_time: ${time}`)
+    writeLog(user, activity, time, 'log', `user,"${user}"`)
+    writeLog(user, activity, time, 'log', `activity,"${activity}"`)
+    writeLog(user, activity, time, 'log', `device_id,"${device_id}"`)
+    writeLog(user, activity, time, 'log', `start_time,"${time}"`)
 }
 
 export const stopRecording = () => async(dispatch, getState) => {
@@ -37,6 +37,6 @@ export const stopRecording = () => async(dispatch, getState) => {
         type: STOP,
         time: time
     })
-    await writeLog(state.user, state.activity, state.start_time, 'log', `end_time: ${time}`)
+    await writeLog(state.user, state.activity, state.start_time, 'log', `end_time,"${time}"`)
     await emailLog(state.user, state.activity, state.start_time)
 }

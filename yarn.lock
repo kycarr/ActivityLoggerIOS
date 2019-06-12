@@ -3723,6 +3723,11 @@ kefir@^3.7.3:
   dependencies:
     symbol-observable "1.0.4"
 
+keymirror@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
+
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -5183,6 +5188,10 @@ react-native-mail-compose@^0.0.6:
   resolved "https://registry.yarnpkg.com/react-native-mail-compose/-/react-native-mail-compose-0.0.6.tgz#03716429103fbc17cf9d1b6ebe43cbb028458296"
   integrity sha512-00vJhqanyBtiF0g8i3mKScE/EXbtlHoQO/4O+HH/ENPNlegPcM2i8KL551sQnafn4Qc31XEbIiQo6xy+f8hKYQ==
 
+"react-native-mail@github:esutton/react-native-mail":
+  version "0.2.4"
+  resolved "https://codeload.github.com/esutton/react-native-mail/tar.gz/d2116f01af475ae3c8d62de121c987f35593e8c6"
+
 react-native-paper@^2.15.2:
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-2.16.0.tgz#5a9edd5615bb010ec0d29cbfd5524c2944b2505d"
@@ -5250,10 +5259,19 @@ react-native-vector-icons@^6.4.2:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
-react-native@0.59.8:
-  version "0.59.8"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.8.tgz#ade4141c777c60f5ec4889d9811d0f80a9d56547"
-  integrity sha512-x1T+/pEXrjgdH9uDzd5doJy5aFlBqW04j7ljDKIGALchhnvdFbtXXrUZ/1PfWHMrIdZxtaDt4tkSttp662GSQA==
+react-native-video@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-4.4.1.tgz#12c6a8bfbabfa7641338a52db3d857ac3073a4fd"
+  integrity sha512-gTZKRqa4NkEBx6t6iAzTFlgxDY23IZW/8YClR0hMzhOD0/9I/AzOBBaOXDyFeKj4EQF+uZ/LUS3r+oDnz1ks5w==
+  dependencies:
+    keymirror "^0.1.1"
+    prop-types "^15.5.10"
+    shaka-player "^2.4.4"
+
+react-native@0.59.9:
+  version "0.59.9"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.9.tgz#c94ee4fa35121720c05235a2dd6cdd2784bf5177"
+  integrity sha512-/+8EgIZwFpYHyyJ7Zav7B6LHNrytwUQ+EKGT/QV7HSrgpf2Y5NZNeUYUHKiVKLYpBip1G32/LcAECQj37YRwGQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^1.2.1"
@@ -5843,6 +5861,11 @@ setprototypeof@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
+
+shaka-player@^2.4.4:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.2.tgz#3e639f8f5dfdb1a0afff2ff1f87cddf481f93fe4"
+  integrity sha512-gpRfXVLAZi33kw9Egop18MkZ/EVRS0soeN6ocR+Btq/J5IoCC56MxwwHzAGna+PgBW9Ox458HRefJ6HB0BoADA==
 
 shebang-command@^1.2.0:
   version "1.2.0"

@@ -21,6 +21,7 @@ class GyroscopeSensor extends React.Component {
     componentDidMount() {
         setUpdateIntervalForType(SensorTypes.gyroscope, UPDATE_INTERVAL);
         this._toggle();
+        writeLog(this.props.user, this.props.activity, this.props.session, 'gyroscope', `time,x,y,z`)
     }
 
     componentWillUnmount() {
@@ -28,7 +29,7 @@ class GyroscopeSensor extends React.Component {
     }
 
     update = (data) => {
-        const formattedData = `${formatDate(new Date())}: (${data.x}, ${data.y}, ${data.z})`
+        const formattedData = `"${formatDate(new Date())}",${data.x},${data.y},${data.z}`
         writeLog(this.props.user, this.props.activity, this.props.session, 'gyroscope', formattedData)
         this.setState({ data });
     }
